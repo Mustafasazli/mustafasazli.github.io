@@ -20,22 +20,64 @@ const MiniGame = ({ onClose }) => {
             velocityX: 0,
             velocityY: 0,
             speed: 5,
-            jumpForce: -12,
+            jumpForce: -13, // Slightly stronger jump for harder platforms
             isJumping: false,
             color: '#00f2ea'
         },
         platforms: [
+            // Ground
             { x: 0, y: 350, width: 800, height: 50, color: '#1a1f3a' },
-            { x: 150, y: 280, width: 120, height: 20, color: '#2a2f4a' },
-            { x: 350, y: 220, width: 120, height: 20, color: '#2a2f4a' },
-            { x: 550, y: 160, width: 120, height: 20, color: '#2a2f4a' },
-            { x: 250, y: 100, width: 100, height: 20, color: '#2a2f4a' },
+
+            // Level 1 - Easy jumps
+            { x: 100, y: 280, width: 100, height: 20, color: '#2a2f4a' },
+            { x: 280, y: 250, width: 80, height: 20, color: '#2a2f4a' },
+            { x: 450, y: 280, width: 100, height: 20, color: '#2a2f4a' },
+            { x: 630, y: 250, width: 90, height: 20, color: '#2a2f4a' },
+
+            // Level 2 - Medium difficulty
+            { x: 50, y: 200, width: 80, height: 20, color: '#2a2f4a' },
+            { x: 200, y: 170, width: 70, height: 20, color: '#2a2f4a' },
+            { x: 350, y: 190, width: 80, height: 20, color: '#2a2f4a' },
+            { x: 520, y: 160, width: 70, height: 20, color: '#2a2f4a' },
+            { x: 670, y: 180, width: 80, height: 20, color: '#2a2f4a' },
+
+            // Level 3 - Hard jumps
+            { x: 120, y: 120, width: 60, height: 20, color: '#2a2f4a' },
+            { x: 260, y: 100, width: 60, height: 20, color: '#2a2f4a' },
+            { x: 400, y: 110, width: 70, height: 20, color: '#2a2f4a' },
+            { x: 550, y: 90, width: 60, height: 20, color: '#2a2f4a' },
+
+            // Level 4 - Very hard (top level)
+            { x: 180, y: 50, width: 50, height: 20, color: '#2a2f4a' },
+            { x: 320, y: 40, width: 50, height: 20, color: '#2a2f4a' },
+            { x: 460, y: 50, width: 50, height: 20, color: '#2a2f4a' },
+            { x: 600, y: 35, width: 50, height: 20, color: '#2a2f4a' },
         ],
         coins: [
-            { x: 200, y: 240, width: 20, height: 20, collected: false },
-            { x: 400, y: 180, width: 20, height: 20, collected: false },
-            { x: 600, y: 120, width: 20, height: 20, collected: false },
-            { x: 300, y: 60, width: 20, height: 20, collected: false },
+            // Level 1 coins
+            { x: 140, y: 250, width: 20, height: 20, collected: false },
+            { x: 310, y: 220, width: 20, height: 20, collected: false },
+            { x: 490, y: 250, width: 20, height: 20, collected: false },
+            { x: 670, y: 220, width: 20, height: 20, collected: false },
+
+            // Level 2 coins
+            { x: 80, y: 170, width: 20, height: 20, collected: false },
+            { x: 230, y: 140, width: 20, height: 20, collected: false },
+            { x: 380, y: 160, width: 20, height: 20, collected: false },
+            { x: 550, y: 130, width: 20, height: 20, collected: false },
+            { x: 700, y: 150, width: 20, height: 20, collected: false },
+
+            // Level 3 coins
+            { x: 150, y: 90, width: 20, height: 20, collected: false },
+            { x: 290, y: 70, width: 20, height: 20, collected: false },
+            { x: 430, y: 80, width: 20, height: 20, collected: false },
+            { x: 580, y: 60, width: 20, height: 20, collected: false },
+
+            // Level 4 coins (bonus - very hard to get)
+            { x: 210, y: 20, width: 20, height: 20, collected: false },
+            { x: 350, y: 10, width: 20, height: 20, collected: false },
+            { x: 490, y: 20, width: 20, height: 20, collected: false },
+            { x: 630, y: 5, width: 20, height: 20, collected: false },
         ],
         gravity: 0.6,
         canvasWidth: 800,
