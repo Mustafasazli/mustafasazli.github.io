@@ -6,9 +6,12 @@ const MiniGame = ({ onClose }) => {
     const canvasRef = useRef(null);
     const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState(false);
+    const [gameWon, setGameWon] = useState(false);
     const [coins, setCoins] = useState(0);
+    const [timer, setTimer] = useState(0);
     const gameLoopRef = useRef(null);
     const keysRef = useRef({ left: false, right: false, jump: false });
+    const timerRef = useRef(null);
 
     // Game state
     const gameStateRef = useRef({
@@ -78,7 +81,18 @@ const MiniGame = ({ onClose }) => {
             { x: 350, y: 10, width: 20, height: 20, collected: false },
             { x: 490, y: 20, width: 20, height: 20, collected: false },
             { x: 630, y: 5, width: 20, height: 20, collected: false },
+
+            // Extra scattered coins for longer gameplay
+            { x: 400, y: 320, width: 20, height: 20, collected: false },
+            { x: 720, y: 310, width: 20, height: 20, collected: false },
+            { x: 30, y: 260, width: 20, height: 20, collected: false },
+            { x: 750, y: 240, width: 20, height: 20, collected: false },
+            { x: 20, y: 150, width: 20, height: 20, collected: false },
+            { x: 770, y: 120, width: 20, height: 20, collected: false },
+            { x: 10, y: 80, width: 20, height: 20, collected: false },
+            { x: 780, y: 50, width: 20, height: 20, collected: false },
         ],
+        totalCoins: 25, // Total number of coins
         gravity: 0.6,
         canvasWidth: 800,
         canvasHeight: 400
@@ -118,6 +132,26 @@ const MiniGame = ({ onClose }) => {
         if (action === 'right') keysRef.current.right = isPressed;
         if (action === 'jump') keysRef.current.jump = isPressed;
     }, [gameOver]);
+
+    // Timer
+    useEffect(() => {
+        if (gameOver || gameWon) {
+            if (timerRef.current) {
+                clearInterval(timerRef.current);
+            }
+            return;
+        }
+
+        timerRef.current = setInterval(() => {
+            setTimer(prev => prev + 1);
+        }, 1000);
+
+        return () => {
+            if (timerRef.current) {
+                clearInterval(timerRef.current);
+            }
+        };
+    }, [gameOver, gameWon]);
 
     // Game loop
     useEffect(() => {
@@ -204,8 +238,14 @@ const MiniGame = ({ onClose }) => {
                     player.y < coin.y + coin.height
                 ) {
                     coin.collected = true;
-                    setCoins(prev => prev + 1);
+                    const newCoins = coins + 1;
+                    setCoins(newCoins);
                     setScore(prev => prev + 100);
+
+                    // Check if all coins collected (WIN!)
+                    if (newCoins >= state.totalCoins) {
+                        setGameWon(true);
+                    }
                 }
             });
 
@@ -261,7 +301,9 @@ const MiniGame = ({ onClose }) => {
     const handleReset = () => {
         setScore(0);
         setCoins(0);
+        setTimer(0);
         setGameOver(false);
+        setGameWon(false);
         keysRef.current = { left: false, right: false, jump: false };
 
         // Reset game state
@@ -308,11 +350,31 @@ const MiniGame = ({ onClose }) => {
                         </div>
                         <div className="glass rounded-lg px-4 py-2">
                             <span className="text-white/70 text-sm font-heading">Coins: </span>
-                            <span className="text-yellow-400 font-display text-xl">🪙 {coins}</span>
+                            <span className="text-yellow-400 font-display text-xl">🪙 {coins}/25</span>
+                        </div>
+                        <div className="glass rounded-lg px-4 py-2">
+                            <span className="text-white/70 text-sm font-heading">Time: </span>
+                            <span className="text-neon-cyan font-display text-xl">{Math.floor(timer / 60)}:{(timer % 60).toString().padStart(2, '0')}</span>
                         </div>
                     </div>
 
-                    {gameOver && (
+                    {gameWon && (
+                        <div className="flex items-center space-x-3">
+                            <div className="glass rounded-lg px-4 py-2 flex items-center space-x-2 neon-border animate-pulse">
+                                <Trophy className="w-5 h-5 text-yellow-400" />
+                                <span className="text-yellow-400 font-heading font-bold">🎉 FINISH! 🎉</span>
+                            </div>
+                            <button
+                                onClick={handleReset}
+                                className="glass rounded-lg px-4 py-2 hover:glass-strong hover:neon-border transition-smooth flex items-center space-x-2"
+                            >
+                                <RotateCcw className="w-4 h-4 text-white" />
+                                <span className="text-white font-heading text-sm">Play Again</span>
+                            </button>
+                        </div>
+                    )}
+
+                    {gameOver && !gameWon && (
                         <div className="flex items-center space-x-3">
                             <div className="glass rounded-lg px-4 py-2 flex items-center space-x-2 neon-border">
                                 <Trophy className="w-5 h-5 text-neon-cyan" />
