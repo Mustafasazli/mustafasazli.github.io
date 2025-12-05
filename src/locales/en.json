@@ -1,0 +1,71 @@
+{
+    "translation": {
+        "hero": {
+            "title": "Full Stack Developer",
+            "subtitle": "Building digital experiences with passion and precision. Creating scalable solutions with modern web technologies.",
+            "cta": "View Projects",
+            "contact": "Get In Touch"
+        },
+        "nav": {
+            "home": "Home",
+            "about": "About",
+            "skills": "Skills",
+            "projects": "Projects",
+            "contact": "Contact"
+        },
+        "about": {
+            "title": "About Me",
+            "description": "I'm a passionate Full Stack Developer with over 5 years of experience building scalable web applications. My expertise spans modern JavaScript frameworks, cloud technologies, and database management.",
+            "experience": {
+                "title": "Experience",
+                "senior": {
+                    "title": "Senior Full Stack Developer",
+                    "company": "Tech Company",
+                    "period": "2022 - Present",
+                    "description": "Leading development of enterprise applications using .NET and React."
+                },
+                "mid": {
+                    "title": "Full Stack Developer",
+                    "company": "Digital Agency",
+                    "period": "2020 - 2022",
+                    "description": "Built responsive web applications and RESTful APIs for various clients."
+                },
+                "junior": {
+                    "title": "Junior Developer",
+                    "company": "Startup Inc",
+                    "period": "2018 - 2020",
+                    "description": "Developed features for SaaS platform using modern web technologies."
+                }
+            },
+            "education": {
+                "title": "Education",
+                "degree": "Bachelor of Computer Science",
+                "school": "University Name",
+                "year": "2018",
+                "description": "Focus on Software Engineering and Web Development"
+            },
+            "achievements": {
+                "projects": "50+ Projects",
+                "projectsDesc": "Successfully delivered",
+                "experience": "5+ Years",
+                "experienceDesc": "Professional experience",
+                "clients": "30+ Clients",
+                "clientsDesc": "Satisfied worldwide"
+            }
+        },
+        "skills": {
+            "title": "Technical Skills"
+        },
+        "projects": {
+            "title": "My Projects",
+            "filter": "Filter"
+        },
+        "contact": {
+            "title": "Contact Me",
+            "name": "Your Name",
+            "email": "Your Email",
+            "message": "Your Message",
+            "send": "Send Message"
+        }
+    }
+}

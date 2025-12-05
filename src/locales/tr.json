@@ -1,0 +1,71 @@
+{
+    "translation": {
+        "hero": {
+            "title": "Full Stack Geliştirici",
+            "subtitle": "Tutku ve hassasiyetle dijital deneyimler inşa ediyorum. Modern web teknolojileri ile ölçeklenebilir çözümler üretiyorum.",
+            "cta": "Projeleri İncele",
+            "contact": "İletişime Geç"
+        },
+        "nav": {
+            "home": "Ana Sayfa",
+            "about": "Hakkımda",
+            "skills": "Yetenekler",
+            "projects": "Projeler",
+            "contact": "İletişim"
+        },
+        "about": {
+            "title": "Hakkımda",
+            "description": "5 yılı aşkın deneyime sahip tutkulu bir Full Stack geliştiriciyim. Modern JavaScript framework'leri, bulut teknolojileri ve veritabanı yönetimi konularında uzmanlığım bulunmaktadır.",
+            "experience": {
+                "title": "Deneyim",
+                "senior": {
+                    "title": "Kıdemli Full Stack Geliştirici",
+                    "company": "Teknoloji Şirketi",
+                    "period": "2022 - Günümüz",
+                    "description": ".NET ve React kullanarak kurumsal uygulamaların geliştirilmesine liderlik ediyorum."
+                },
+                "mid": {
+                    "title": "Full Stack Geliştirici",
+                    "company": "Dijital Ajans",
+                    "period": "2020 - 2022",
+                    "description": "Çeşitli müşteriler için responsive web uygulamaları ve RESTful API'ler geliştirdim."
+                },
+                "junior": {
+                    "title": "Junior Geliştirici",
+                    "company": "Startup Inc",
+                    "period": "2018 - 2020",
+                    "description": "Modern web teknolojileri kullanarak SaaS platformu için özellikler geliştirdim."
+                }
+            },
+            "education": {
+                "title": "Eğitim",
+                "degree": "Bilgisayar Mühendisliği Lisans",
+                "school": "Üniversite Adı",
+                "year": "2018",
+                "description": "Yazılım Mühendisliği ve Web Geliştirme odaklı"
+            },
+            "achievements": {
+                "projects": "50+ Proje",
+                "projectsDesc": "Başarıyla tamamlandı",
+                "experience": "5+ Yıl",
+                "experienceDesc": "Profesyonel deneyim",
+                "clients": "30+ Müşteri",
+                "clientsDesc": "Dünya çapında memnun"
+            }
+        },
+        "skills": {
+            "title": "Teknik Yetenekler"
+        },
+        "projects": {
+            "title": "Projelerim",
+            "filter": "Filtrele"
+        },
+        "contact": {
+            "title": "İletişim",
+            "name": "Adınız Soyadınız",
+            "email": "E-posta Adresiniz",
+            "message": "Mesajınız",
+            "send": "Mesaj Gönder"
+        }
+    }
+}
