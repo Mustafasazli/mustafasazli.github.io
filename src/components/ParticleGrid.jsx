@@ -12,8 +12,8 @@ const ParticleGrid = () => {
         canvas.height = canvas.offsetHeight;
 
         const particles = [];
-        const particleCount = 50;
-        const connectionDistance = 150;
+        const particleCount = 30; // Reduced from 50 for better performance
+        const connectionDistance = 120; // Reduced from 150 for better performance
         let mouse = { x: null, y: null };
 
         class Particle {
@@ -79,16 +79,25 @@ const ParticleGrid = () => {
         };
 
         let animationFrameId;
+        let lastTime = 0;
+        const fpsInterval = 1000 / 30; // 30 FPS throttle for better performance
 
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const animate = (currentTime) => {
+            const elapsed = currentTime - lastTime;
 
-            particles.forEach((particle) => {
-                particle.update();
-                particle.draw();
-            });
+            // Throttle to 30 FPS
+            if (elapsed > fpsInterval) {
+                lastTime = currentTime - (elapsed % fpsInterval);
 
-            connectParticles();
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                particles.forEach((particle) => {
+                    particle.update();
+                    particle.draw();
+                });
+
+                connectParticles();
+            }
 
             animationFrameId = requestAnimationFrame(animate);
         };

@@ -12,7 +12,7 @@ const StarfieldBackground = () => {
         canvas.height = window.innerHeight;
 
         const stars = [];
-        const starCount = 300; // Increased from 200
+        const starCount = 150; // Reduced from 300 for better performance
 
         // Create stars with varied properties
         for (let i = 0; i < starCount; i++) {
@@ -32,7 +32,7 @@ const StarfieldBackground = () => {
         // Add some shooting stars
         const shootingStars = [];
         const createShootingStar = () => {
-            if (Math.random() > 0.98) { // 2% chance each frame
+            if (Math.random() > 0.99) { // 1% chance (reduced from 2% for performance)
                 shootingStars.push({
                     x: Math.random() * canvas.width,
                     y: Math.random() * canvas.height * 0.5,
@@ -46,93 +46,103 @@ const StarfieldBackground = () => {
 
         let animationFrameId;
         let frame = 0;
+        let lastTime = 0;
+        const fpsInterval = 1000 / 30; // 30 FPS throttle for better performance
 
-        const animate = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            frame++;
+        const animate = (currentTime) => {
+            const elapsed = currentTime - lastTime;
 
-            // Draw regular stars with enhanced effects
-            stars.forEach((star) => {
-                // Smooth pulsing effect
-                star.pulsePhase += star.twinkleSpeed;
-                const pulse = Math.sin(star.pulsePhase) * 0.3 + 0.7;
-                const currentOpacity = star.opacity * pulse;
+            // Throttle to 30 FPS
+            if (elapsed > fpsInterval) {
+                lastTime = currentTime - (elapsed % fpsInterval);
 
-                // Glow effect
-                const gradient = ctx.createRadialGradient(
-                    star.x, star.y, 0,
-                    star.x, star.y, star.radius * 3
-                );
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                frame++;
 
-                let color;
-                if (star.color === 'cyan') {
-                    color = `rgba(0, 255, 255, ${currentOpacity})`;
-                    gradient.addColorStop(0, `rgba(0, 255, 255, ${currentOpacity})`);
-                    gradient.addColorStop(0.5, `rgba(0, 255, 255, ${currentOpacity * 0.3})`);
-                    gradient.addColorStop(1, 'rgba(0, 255, 255, 0)');
-                } else if (star.color === 'blue') {
-                    color = `rgba(100, 150, 255, ${currentOpacity})`;
-                    gradient.addColorStop(0, `rgba(100, 150, 255, ${currentOpacity})`);
-                    gradient.addColorStop(0.5, `rgba(100, 150, 255, ${currentOpacity * 0.3})`);
-                    gradient.addColorStop(1, 'rgba(100, 150, 255, 0)');
-                } else {
-                    color = `rgba(255, 255, 255, ${currentOpacity})`;
-                    gradient.addColorStop(0, `rgba(255, 255, 255, ${currentOpacity})`);
-                    gradient.addColorStop(0.5, `rgba(255, 255, 255, ${currentOpacity * 0.3})`);
-                    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
-                }
+                // Draw regular stars with enhanced effects
+                stars.forEach((star) => {
+                    // Smooth pulsing effect
+                    star.pulsePhase += star.twinkleSpeed;
+                    const pulse = Math.sin(star.pulsePhase) * 0.3 + 0.7;
+                    const currentOpacity = star.opacity * pulse;
 
-                // Draw star with glow
-                ctx.beginPath();
-                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
-                ctx.fillStyle = gradient;
-                ctx.fill();
+                    // Glow effect
+                    const gradient = ctx.createRadialGradient(
+                        star.x, star.y, 0,
+                        star.x, star.y, star.radius * 3
+                    );
 
-                // Add sparkle effect for larger stars
-                if (star.radius > 1.5 && pulse > 0.9) {
+                    let color;
+                    if (star.color === 'cyan') {
+                        color = `rgba(0, 255, 255, ${currentOpacity})`;
+                        gradient.addColorStop(0, `rgba(0, 255, 255, ${currentOpacity})`);
+                        gradient.addColorStop(0.5, `rgba(0, 255, 255, ${currentOpacity * 0.3})`);
+                        gradient.addColorStop(1, 'rgba(0, 255, 255, 0)');
+                    } else if (star.color === 'blue') {
+                        color = `rgba(100, 150, 255, ${currentOpacity})`;
+                        gradient.addColorStop(0, `rgba(100, 150, 255, ${currentOpacity})`);
+                        gradient.addColorStop(0.5, `rgba(100, 150, 255, ${currentOpacity * 0.3})`);
+                        gradient.addColorStop(1, 'rgba(100, 150, 255, 0)');
+                    } else {
+                        color = `rgba(255, 255, 255, ${currentOpacity})`;
+                        gradient.addColorStop(0, `rgba(255, 255, 255, ${currentOpacity})`);
+                        gradient.addColorStop(0.5, `rgba(255, 255, 255, ${currentOpacity * 0.3})`);
+                        gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    }
+
+                    // Draw star with glow
                     ctx.beginPath();
-                    ctx.moveTo(star.x, star.y - star.radius * 2);
-                    ctx.lineTo(star.x, star.y + star.radius * 2);
-                    ctx.moveTo(star.x - star.radius * 2, star.y);
-                    ctx.lineTo(star.x + star.radius * 2, star.y);
-                    ctx.strokeStyle = color;
-                    ctx.lineWidth = 0.5;
-                    ctx.stroke();
-                }
-            });
+                    ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = gradient;
+                    ctx.fill();
 
-            // Create and animate shooting stars
-            if (frame % 60 === 0) {
-                createShootingStar();
+                    // Add sparkle effect for larger stars
+                    if (star.radius > 1.5 && pulse > 0.9) {
+                        ctx.beginPath();
+                        ctx.moveTo(star.x, star.y - star.radius * 2);
+                        ctx.lineTo(star.x, star.y + star.radius * 2);
+                        ctx.moveTo(star.x - star.radius * 2, star.y);
+                        ctx.lineTo(star.x + star.radius * 2, star.y);
+                        ctx.strokeStyle = color;
+                        ctx.lineWidth = 0.5;
+                        ctx.stroke();
+                    }
+                });
+
+                // Create and animate shooting stars
+                if (frame % 60 === 0) {
+                    createShootingStar();
+                }
+
+                shootingStars.forEach((star, index) => {
+                    star.x += Math.cos(star.angle) * star.speed;
+                    star.y += Math.sin(star.angle) * star.speed;
+                    star.opacity -= 0.01;
+
+                    if (star.opacity > 0) {
+                        const gradient = ctx.createLinearGradient(
+                            star.x, star.y,
+                            star.x - Math.cos(star.angle) * star.length,
+                            star.y - Math.sin(star.angle) * star.length
+                        );
+                        gradient.addColorStop(0, `rgba(0, 255, 255, ${star.opacity})`);
+                        gradient.addColorStop(1, 'rgba(0, 255, 255, 0)');
+
+                        ctx.beginPath();
+                        ctx.moveTo(star.x, star.y);
+                        ctx.lineTo(
+                            star.x - Math.cos(star.angle) * star.length,
+                            star.y - Math.sin(star.angle) * star.length
+                        );
+                        ctx.strokeStyle = gradient;
+                        ctx.lineWidth = 2;
+                        ctx.stroke();
+                    } else {
+                        shootingStars.splice(index, 1);
+                    }
+                });
+
             }
-
-            shootingStars.forEach((star, index) => {
-                star.x += Math.cos(star.angle) * star.speed;
-                star.y += Math.sin(star.angle) * star.speed;
-                star.opacity -= 0.01;
-
-                if (star.opacity > 0) {
-                    const gradient = ctx.createLinearGradient(
-                        star.x, star.y,
-                        star.x - Math.cos(star.angle) * star.length,
-                        star.y - Math.sin(star.angle) * star.length
-                    );
-                    gradient.addColorStop(0, `rgba(0, 255, 255, ${star.opacity})`);
-                    gradient.addColorStop(1, 'rgba(0, 255, 255, 0)');
-
-                    ctx.beginPath();
-                    ctx.moveTo(star.x, star.y);
-                    ctx.lineTo(
-                        star.x - Math.cos(star.angle) * star.length,
-                        star.y - Math.sin(star.angle) * star.length
-                    );
-                    ctx.strokeStyle = gradient;
-                    ctx.lineWidth = 2;
-                    ctx.stroke();
-                } else {
-                    shootingStars.splice(index, 1);
-                }
-            });
 
             animationFrameId = requestAnimationFrame(animate);
         };

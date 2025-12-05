@@ -13,12 +13,20 @@ const HomePage = () => {
     const [showCurtain, setShowCurtain] = useState(true);
 
     useEffect(() => {
-        // Hide curtain after a delay
-        const timer = setTimeout(() => {
-            setShowCurtain(false);
-        }, 1000); // Increased delay for better viewing
+        // Check if user has visited before
+        const hasVisited = localStorage.getItem('hasVisitedHomePage');
 
-        return () => clearTimeout(timer);
+        if (!hasVisited) {
+            // First visit - show curtain
+            const timer = setTimeout(() => {
+                setShowCurtain(false);
+                localStorage.setItem('hasVisitedHomePage', 'true');
+            }, 1000);
+            return () => clearTimeout(timer);
+        } else {
+            // Not first visit - skip curtain
+            setShowCurtain(false);
+        }
     }, []);
 
     const features = [
